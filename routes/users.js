@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const { createUser, getUser, getAllUsers, updateUser, deleteUser, validateUser } = require('../database');
+const cookieParser = require('cookie-parser');
 
 router.post('/users', (req, res) => {
     const user = req.body.user;
@@ -66,6 +67,7 @@ router.post('/login', (req, res) => {
     const password = req.body.password;
     const userObj = getUser(user);
     if (userObj && validateUser(user, password)) {
+        res.cookie('user', user);
         res.status(200).send('Login correcto');
     } else {
         res.status(401).send('Login incorrecto');
