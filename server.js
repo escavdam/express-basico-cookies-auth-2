@@ -13,6 +13,7 @@ app.use((req, res, next) => {
 
 const users = require('./routes/users');
 app.use("/api/", users);
+
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);
     });

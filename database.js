@@ -45,9 +45,9 @@ function updateUser(user, password){
 }
 
 function validateUser(user, password) {
-    const userObj = getUser(user);
+    const userObj = getUser(user); //
     //password is plaintext
-    return bcrypt.compareSync(password, userObj.password);
+    return bcrypt.compareSync(password, userObj.password); //
 }
 
 

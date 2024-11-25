@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 const { createUser, getUser, getAllUsers, updateUser, deleteUser, validateUser } = require('../database');
-const cookieParser = require('cookie-parser');
 
 router.post('/users', (req, res) => {
     const user = req.body.user;
@@ -11,7 +9,7 @@ router.post('/users', (req, res) => {
         createUser(user, password);
         res.status(201).send('Usuario creado');
     } catch (err) {
-        res.status(500).send("Error al crear el usuario");
+        res.status(500).send("Usuario ya existe");
     }
 });
 
@@ -20,6 +18,7 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:user', (req, res) => {
+    //TODO: cambiar if-else por try-catch
     const user = req.params.user;
     const userObj = getUser(user);
     if (userObj) {
@@ -47,18 +46,6 @@ router.delete('/users/:user', (req, res) => {
         res.status(200).send('Usuario eliminado');
     } catch (err) {
         res.status(500).send('Error al eliminar el usuario');
-    }
-});
-
-router.post('/register', (req, res) => {
-    const user = req.body.user;
-    const password = req.body.password;
-    const userObj = getUser(user);
-    if (userObj) {
-        res.status(409).send('Usuario ya existe');
-    } else {
-        createUser(user, password);
-        res.status(201).send('Usuario creado');
     }
 });
 
